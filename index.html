@@ -18,62 +18,43 @@
             flex-direction: column;
             height: 100vh;
             width: 100vw;
-            background-color: #f4f4f4;
+            background-color: #ffffff;
             overflow: hidden;
             position: relative;
-            padding-bottom: 100px;
-            padding-top: 100px;
+            padding: 20px;
         }
 
         .gallery-container {
-            width: auto;
-            max-width: 800px;
-            height: auto;
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 100%;
+            max-width: 800px;
             position: relative;
-            overflow: visible;
-            padding-bottom: 10px;
-            padding-top: 10px;
         }
 
         .image-wrapper {
-            width: 100%;
-            position: relative;
+            width: 70%;
             text-align: center;
-            
         }
 
-        .gallery-container img {
-            width: 85%;
-            height: 100%;
+        /* Поднять картинку только на десктопе */
+        @media (min-width: 950px) {
+            .image-wrapper {
+                margin-top: -15%; /* Поднимаем картинку на ПК */
+            }
+        }
+
+        .image-wrapper a {
+            display: block;
+            width: 100%;
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: auto;
+            max-height: 80vh;
             object-fit: contain;
-            
-        }
-
-        .countdown-wrapper {
-            margin-top: 20px; /* Таймер будет находиться под картинкой */
-            display: flex;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: bold;
-            color: black;
-            z-index: 20;
-            opacity: 0.8;
-        }
-
-        .countdown-text {
-            font-size: 24px;
-            font-weight: bold;
-            color: black;
-            margin-right: 10px;
-        }
-
-        .countdown {
-            font-size: 24px;
-            font-weight: bold;
-            color: black;
         }
 
         .social-icons {
@@ -123,17 +104,15 @@
             margin-left: 5px;
         }
 
-        @media (max-width: 768px) {
-            .countdown-text {
+        @media (max-width: 950px) {
+            .countdown-text, .countdown {
                 font-size: 18px;
             }
 
-            .countdown {
-                font-size: 15px;
-            }
-
-            .social-icons {
-                gap: 10px;
+            .image-wrapper {
+                width: 100vw;
+                height: 100vh;
+                margin-top: 80%; /* Поднимет картинку на 20% */
             }
 
             .social-icons a img {
@@ -143,16 +122,8 @@
         }
 
         @media (max-width: 480px) {
-            .countdown-text {
+            .countdown-text, .countdown {
                 font-size: 14px;
-            }
-
-            .countdown {
-                font-size: 15px;
-            }
-
-            .social-icons {
-                gap: 8px;
             }
 
             .social-icons a img {
@@ -165,12 +136,9 @@
 <body>
     <div class="gallery-container">
         <div class="image-wrapper">
-            <img src="https://i.postimg.cc/2y9NxdzJ/DALL-E-2025-02-10-17-31-04-A-three-panel-black-and-white-manga-style-comic-strip-The-first-panel.webp" alt="Фоновое изображение">
-        </div>
-        <!-- Таймер теперь расположен под картинкой -->
-        <div class="countdown-wrapper">
-            <div class="countdown-text">Continues in</div>
-            <div class="countdown" id="countdown">00:00:00</div>
+            <a href="https://app.ston.fi/swap?chartVisible=false&clckid=88127190&ft=EQAfBxFiC5aDQW1vUNUJEmqMbKi1vHrgmrb9HxyeRsLaQnQq&tt=EQDz4YOi2Mnzdqca0ZCprrcIm5K16UvM_OPiB4HWJ5KMVie3">
+                <img src="https://i.postimg.cc/mZN31twg/Screenshot-2025-03-09-013836.jpg" alt="Фоновое изображение">
+            </a>
         </div>
     </div>
 
@@ -186,35 +154,6 @@
     </div>
 
     <script>
-        function updateCountdown() {
-            const now = new Date();
-
-            const nowEST = new Date(now.toLocaleString("en-US", { timeZone: "America/New_York" }));
-            let targetDate = new Date(nowEST);
-
-            targetDate.setHours(22, 0, 0, 0); // 10 PM EST (22:00)
-
-            if (nowEST >= targetDate) {
-                targetDate.setDate(targetDate.getDate() + 1);
-            }
-
-            const timeDiff = targetDate - nowEST;
-
-            if (timeDiff > 0) {
-                const hours = Math.floor(timeDiff / (1000 * 60 * 60));
-                const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-
-                document.getElementById("countdown").innerText = 
-                    `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-            } else {
-                document.getElementById("countdown").innerText = "00:00:00";
-            }
-        }
-
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
-
         function showComingSoon(event) {
             event.preventDefault();
             const icon = event.target.closest('a');
